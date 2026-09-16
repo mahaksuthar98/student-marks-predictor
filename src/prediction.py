@@ -5,9 +5,7 @@ from pathlib import Path
 from .database import insert_prediction
 
 
-# ==========================================
-# LOAD TRAINED MODEL
-# ==========================================
+# LOAD TRAINED MODEL---------------------
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -18,9 +16,7 @@ model = joblib.load(model_path)
 print("ML model loaded successfully!")
 
 
-# ==========================================
-# PREDICT MARKS
-# ==========================================
+# PREDICT MARKS-------------------------
 
 def predict_marks(
     study_hours,
@@ -43,9 +39,7 @@ def predict_marks(
     return prediction[0]
 
 
-# ==========================================
-# PREDICT + SAVE
-# ==========================================
+# PREDICT + SAVE------------------------------
 
 def predict_and_save(
     student_name,

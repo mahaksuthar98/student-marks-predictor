@@ -15,30 +15,22 @@ from sklearn.metrics import (
 import numpy as np
 
 
-# ==========================================
-# PROJECT PATH
-# ==========================================
+# PROJECT PATH---------------------
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# ==========================================
-# DATA PATH
-# ==========================================
+# DATA PATH----------------------------
 
 DATA_PATH = BASE_DIR / "data" / "students_cleaned.csv"
 
 
-# ==========================================
-# MODEL PATH
-# ==========================================
+# MODEL PATH----------------------------
 
 MODEL_PATH = BASE_DIR / "model" / "random_forest_model.pkl"
 
 
-# ==========================================
-# LOAD DATA
-# ==========================================
+# LOAD DATA----------------------------
 
 print("\n==========================================")
 print("LOADING DATA")
@@ -49,9 +41,7 @@ df = pd.read_csv(DATA_PATH)
 print("Dataset shape:", df.shape)
 
 
-# ==========================================
-# FEATURES
-# ==========================================
+# FEATURES------------------------------
 
 X = df[
     [
@@ -63,15 +53,12 @@ X = df[
 ]
 
 
-# ==========================================
-# TARGET
-# ==========================================
+# TARGET-----------------------------
+
 Y = df["final_marks"]
 
 
-# ==========================================
-# TRAIN TEST SPLIT
-# ==========================================
+# TRAIN TEST SPLIT-------------------------
 
 X_train, X_test, Y_train, Y_test = train_test_split(
     X,
@@ -89,9 +76,7 @@ print("Training samples:", len(X_train))
 print("Testing samples :", len(X_test))
 
 
-# ==========================================
-# CREATE RANDOM FOREST
-# ==========================================
+# CREATE RANDOM FOREST----------------------------------
 
 model = RandomForestRegressor(
     n_estimators=100,
@@ -100,9 +85,7 @@ model = RandomForestRegressor(
 )
 
 
-# ==========================================
-# TRAIN MODEL
-# ==========================================
+# TRAIN MODEL-------------------------------
 
 print("\n==========================================")
 print("TRAINING RANDOM FOREST")
@@ -116,18 +99,14 @@ model.fit(
 print("Model training completed!")
 
 
-# ==========================================
-# PREDICTION
-# ==========================================
+# PREDICTION-------------------------------
 
 Y_pred = model.predict(
     X_test
 )
 
 
-# ==========================================
-# MODEL EVALUATION
-# ==========================================
+# MODEL EVALUATION---------------------------
 
 mae = mean_absolute_error(
     Y_test,
@@ -147,9 +126,7 @@ r2 = r2_score(
 )
 
 
-# ==========================================
-# DISPLAY METRICS
-# ==========================================
+# DISPLAY METRICS----------------------------
 
 print("\n==========================================")
 print("FINAL MODEL EVALUATION")
@@ -161,9 +138,7 @@ print(f"RMSE : {rmse:.2f}")
 print(f"R2   : {r2:.2f}")
 
 
-# ==========================================
-# SAVE MODEL
-# ==========================================
+# SAVE MODEL------------------------------
 
 joblib.dump(
     model,

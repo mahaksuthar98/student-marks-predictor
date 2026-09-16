@@ -1,13 +1,9 @@
-// ======================================================
-// STUDENT MARKS PREDICTOR - FRONTEND JAVASCRIPT
-// ======================================================
+// STUDENT MARKS PREDICTOR - FRONTEND JAVASCRIPT-------------------------------
 
 const API_URL = "http://127.0.0.1:8000";
 
 
-// ======================================================
-// ELEMENTS
-// ======================================================
+// ELEMENTS------------------------------------------
 
 const form = document.getElementById("predictionForm");
 
@@ -28,9 +24,7 @@ const predictionTable = document.getElementById("predictionTable");
 const messageBox = document.getElementById("messageBox");
 
 
-// ======================================================
-// SHOW MESSAGE
-// ======================================================
+// SHOW MESSAGE--------------------------------
 
 function showMessage(message, type = "info") {
 
@@ -56,9 +50,7 @@ function showMessage(message, type = "info") {
 }
 
 
-// ======================================================
-// HIDE MESSAGE
-// ======================================================
+// HIDE MESSAGE-----------------------------------------------
 
 function hideMessage() {
 
@@ -67,9 +59,7 @@ function hideMessage() {
 }
 
 
-// ======================================================
-// LOAD ALL PREDICTIONS
-// ======================================================
+// LOAD ALL PREDICTIONS-----------------------------------
 
 async function loadPredictions() {
 
@@ -89,13 +79,6 @@ async function loadPredictions() {
 
         console.log("FastAPI Response:", data);
 
-        // IMPORTANT:
-        // FastAPI returns:
-        //
-        // {
-        //     count: 8,
-        //     predictions: [...]
-        // }
 
         const records =
             data.predictions || [];
@@ -121,9 +104,7 @@ async function loadPredictions() {
 }
 
 
-// ======================================================
-// DISPLAY RECORDS
-// ======================================================
+// DISPLAY RECORDS-------------------------------
 
 function displayRecords(records) {
 
@@ -148,18 +129,6 @@ function displayRecords(records) {
 
         const row =
             document.createElement("tr");
-
-
-        // IMPORTANT:
-        // API response uses OBJECT properties:
-        //
-        // id
-        // student_name
-        // study_hours
-        // attendance
-        // previous_marks
-        // assignment_score
-        // predicted_marks
 
 
         row.innerHTML = `
@@ -228,9 +197,7 @@ function displayRecords(records) {
 }
 
 
-// ======================================================
-// UPDATE DASHBOARD
-// ======================================================
+// UPDATE DASHBOARD-------------------------------
 
 function updateDashboard(records) {
 
@@ -267,7 +234,7 @@ function updateDashboard(records) {
     }
 
 
-    // Get predicted marks using correct API field
+    // Get predicted marks using correct API field----------------------
 
     const marks =
         records
@@ -342,9 +309,7 @@ function updateDashboard(records) {
 }
 
 
-// ======================================================
-// DRAW SIMPLE BAR CHART
-// ======================================================
+// DRAW SIMPLE BAR CHART------------------------------
 
 function drawChart(records) {
 
@@ -423,9 +388,7 @@ function drawChart(records) {
 }
 
 
-// ======================================================
-// VALIDATE INPUT
-// ======================================================
+// VALIDATE INPUT-----------------------------
 
 function validateRange(
     value,
@@ -473,9 +436,7 @@ function validateRange(
 }
 
 
-// ======================================================
-// PREDICT / UPDATE
-// ======================================================
+// PREDICT / UPDATE-------------------------------
 
 form.addEventListener(
     "submit",
@@ -516,9 +477,7 @@ form.addEventListener(
             ).value;
 
 
-        // -------------------------------
-        // VALIDATION
-        // -------------------------------
+        // VALIDATION----------------------------
 
         if (studentName === "") {
 
@@ -588,9 +547,7 @@ form.addEventListener(
         }
 
 
-        // -------------------------------
-        // REQUEST DATA
-        // -------------------------------
+        // REQUEST DATA-----------------------------
 
         const requestData = {
 
@@ -636,9 +593,7 @@ form.addEventListener(
             let response;
 
 
-            // ==================================================
-            // UPDATE EXISTING RECORD
-            // ==================================================
+            // UPDATE EXISTING RECORD-----------------------------
 
             if (editId) {
 
@@ -662,9 +617,7 @@ form.addEventListener(
 
             }
 
-            // ==================================================
-            // CREATE NEW PREDICTION
-            // ==================================================
+            // CREATE NEW PREDICTION----------------------------------
 
             else {
 
@@ -689,9 +642,7 @@ form.addEventListener(
             }
 
 
-            // ==================================================
-            // ERROR
-            // ==================================================
+            // ERROR-----------------------------------
 
             if (!response.ok) {
 
@@ -710,9 +661,7 @@ form.addEventListener(
             }
 
 
-            // ==================================================
-            // RESULT
-            // ==================================================
+            // RESULT---------------------------------
 
             const result =
                 await response.json();
@@ -724,9 +673,7 @@ form.addEventListener(
             );
 
 
-            // ==================================================
-            // SHOW RESULT
-            // ==================================================
+            // SHOW RESULT--------------------------------------
 
             if (result.predicted_marks !== undefined) {
 
@@ -744,9 +691,7 @@ form.addEventListener(
             }
 
 
-            // ==================================================
-            // SUCCESS MESSAGE
-            // ==================================================
+            // SUCCESS MESSAGE------------------------------
 
             showMessage(
 
@@ -759,9 +704,7 @@ form.addEventListener(
             );
 
 
-            // ==================================================
-            // EXIT EDIT MODE
-            // ==================================================
+            // EXIT EDIT MODE-------------------------------
 
             delete form.dataset.editId;
 
@@ -778,9 +721,7 @@ form.addEventListener(
             form.reset();
 
 
-            // ==================================================
-            // RELOAD TABLE
-            // ==================================================
+            // RELOAD TABLE--------------------------------
 
             await loadPredictions();
 
@@ -814,9 +755,7 @@ form.addEventListener(
 );
 
 
-// ======================================================
-// SEARCH BY NAME
-// ======================================================
+// SEARCH BY NAME-------------------------------------
 
 async function searchByName() {
 
@@ -896,9 +835,7 @@ async function searchByName() {
 }
 
 
-// ======================================================
-// SEARCH BY ID
-// ======================================================
+// SEARCH BY ID------------------------------
 
 async function searchById() {
 
@@ -986,9 +923,7 @@ async function searchById() {
 }
 
 
-// ======================================================
-// SHOW ALL
-// ======================================================
+// SHOW ALL----------------------------
 
 async function showAllPredictions() {
 
@@ -1013,9 +948,7 @@ async function showAllPredictions() {
 }
 
 
-// ======================================================
-// EDIT PREDICTION
-// ======================================================
+// EDIT PREDICTION---------------------------------
 
 async function editPrediction(id) {
 
@@ -1122,9 +1055,7 @@ async function editPrediction(id) {
 }
 
 
-// ======================================================
-// DELETE PREDICTION
-// ======================================================
+// DELETE PREDICTION-------------------------------
 
 async function deletePrediction(id) {
 
@@ -1188,9 +1119,7 @@ async function deletePrediction(id) {
 }
 
 
-// ======================================================
-// RESET FORM
-// ======================================================
+// RESET FORM-------------------------------------
 
 function resetForm() {
 
@@ -1222,8 +1151,6 @@ function resetForm() {
 }
 
 
-// ======================================================
-// INITIAL LOAD
-// ======================================================
+// INITIAL LOAD------------------------------------------
 
 loadPredictions();

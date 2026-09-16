@@ -8,9 +8,7 @@ import src.prediction
 client = TestClient(app)
 
 
-# ==========================================
-# TEST HOME ENDPOINT
-# ==========================================
+# TEST HOME ENDPOINT----------------------------
 
 def test_home():
 
@@ -23,9 +21,7 @@ def test_home():
     assert data["message"] == "Student Marks Predictor API is running"
 
 
-# ==========================================
-# TEST HEALTH ENDPOINT
-# ==========================================
+# TEST HEALTH ENDPOINT--------------------------
 
 def test_health():
 
@@ -38,9 +34,7 @@ def test_health():
     assert data["status"] == "healthy"
 
 
-# ==========================================
-# TEST INVALID PREDICTION DATA
-# ==========================================
+# TEST INVALID PREDICTION DATA---------------------------
 
 def test_invalid_prediction():
 
@@ -58,9 +52,7 @@ def test_invalid_prediction():
     assert response.status_code == 422
 
 
-# ==========================================
-# TEST INVALID ATTENDANCE
-# ==========================================
+# TEST INVALID ATTENDANCE-----------------------------
 
 def test_invalid_attendance():
 
@@ -78,9 +70,7 @@ def test_invalid_attendance():
     assert response.status_code == 422
 
 
-# ==========================================
-# TEST INVALID PREVIOUS MARKS
-# ==========================================
+# TEST INVALID PREVIOUS MARKS----------------------------
 
 def test_invalid_previous_marks():
 
@@ -98,9 +88,7 @@ def test_invalid_previous_marks():
     assert response.status_code == 422
 
 
-# ==========================================
-# TEST INVALID ASSIGNMENT SCORE
-# ==========================================
+# TEST INVALID ASSIGNMENT SCORE------------------------------
 
 def test_invalid_assignment_score():
 
@@ -118,9 +106,7 @@ def test_invalid_assignment_score():
     assert response.status_code == 422
 
 
-# ==========================================
-# TEST NON-EXISTING PREDICTION
-# ==========================================
+# TEST NON-EXISTING PREDICTION-------------------------------
 
 def test_prediction_not_found():
 
@@ -129,9 +115,7 @@ def test_prediction_not_found():
     assert response.status_code == 404
 
 
-# ==========================================
-# TEST SUCCESSFUL PREDICTION
-# ==========================================
+# TEST SUCCESSFUL PREDICTION----------------------------------
 
 def test_successful_prediction(monkeypatch):
 
@@ -173,9 +157,7 @@ def test_successful_prediction(monkeypatch):
     assert data["predicted_marks"] == 82.50
 
 
-# ==========================================
-# TEST PREDICTION SERVER ERROR
-# ==========================================
+# TEST PREDICTION SERVER ERROR---------------------------
 
 def test_prediction_server_error(monkeypatch):
 
@@ -213,9 +195,7 @@ def test_prediction_server_error(monkeypatch):
     assert "Prediction failed" in data["detail"]
 
 
-# ==========================================
-# TEST GET ALL PREDICTIONS
-# ==========================================
+# TEST GET ALL PREDICTIONS----------------------------
 
 def test_get_all_predictions(monkeypatch):
 
@@ -259,9 +239,7 @@ def test_get_all_predictions(monkeypatch):
     assert data["predictions"][0][1] == "Rahul"
 
 
-# ==========================================
-# TEST GET PREDICTION BY ID
-# ==========================================
+# TEST GET PREDICTION BY ID-------------------------------
 
 def test_get_prediction_by_id(monkeypatch):
 
@@ -294,9 +272,7 @@ def test_get_prediction_by_id(monkeypatch):
     assert data["predicted_marks"] == 82.50
 
 
-# ==========================================
-# TEST SEARCH BY NAME
-# ==========================================
+# TEST SEARCH BY NAME--------------------------
 
 def test_search_predictions_by_name(monkeypatch):
 
@@ -331,9 +307,7 @@ def test_search_predictions_by_name(monkeypatch):
     assert data["predictions"][0][1] == "Rahul"
 
 
-# ==========================================
-# TEST UPDATE PREDICTION
-# ==========================================
+# TEST UPDATE PREDICTION--------------------------
 
 def test_update_prediction(monkeypatch):
 
@@ -389,9 +363,7 @@ def test_update_prediction(monkeypatch):
     assert data["predicted_marks"] == 90.00
 
 
-# ==========================================
-# TEST DELETE PREDICTION
-# ==========================================
+# TEST DELETE PREDICTION-------------------------
 
 def test_delete_prediction(monkeypatch):
 

@@ -1,9 +1,7 @@
 from src.prediction import predict_marks
 
 
-# ==========================================
-# TEST BASIC PREDICTION
-# ==========================================
+# TEST BASIC PREDICTION------------------------------
 
 def test_prediction_returns_number():
 
@@ -17,9 +15,7 @@ def test_prediction_returns_number():
     assert isinstance(result, (int, float))
 
 
-# ==========================================
-# TEST PREDICTION IS NOT EMPTY
-# ==========================================
+# TEST PREDICTION IS NOT EMPTY-----------------------
 
 def test_prediction_not_none():
 
@@ -33,9 +29,7 @@ def test_prediction_not_none():
     assert result is not None
 
 
-# ==========================================
-# TEST PREDICTION RANGE
-# ==========================================
+# TEST PREDICTION RANGE-------------------------
 
 def test_prediction_reasonable_range():
 
@@ -49,9 +43,7 @@ def test_prediction_reasonable_range():
     assert 0 <= result <= 100
 
 
-# ==========================================
-# TEST DIFFERENT INPUTS
-# ==========================================
+# TEST DIFFERENT INPUTS--------------------------
 
 def test_prediction_with_different_input():
 
@@ -65,9 +57,7 @@ def test_prediction_with_different_input():
     assert isinstance(result, (int, float))
 
 
-# ==========================================
-# TEST HIGH PERFORMANCE INPUT
-# ==========================================
+# TEST HIGH PERFORMANCE INPUT-------------------------
 
 def test_high_performance_prediction():
 

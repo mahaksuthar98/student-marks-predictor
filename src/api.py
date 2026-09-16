@@ -13,10 +13,7 @@ from .database import (
     delete_prediction
 )
 
-
-# ==========================================
-# FASTAPI APPLICATION
-# ==========================================
+# FASTAPI APPLICATION-----------------------------------------
 
 app = FastAPI(
     title="Student Marks Predictor API",
@@ -24,10 +21,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
-
-# ==========================================
-# CORS CONFIGURATION
-# ==========================================
+# CORS CONFIGURATION----------------------------------------
 
 app.add_middleware(
     CORSMiddleware,
@@ -37,10 +31,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-# ==========================================
-# REQUEST MODEL
-# ==========================================
+# REQUEST MODEL-------------------------------------------
 
 class PredictionRequest(BaseModel):
 
@@ -63,10 +54,7 @@ class PredictionRequest(BaseModel):
         le=100
     )
 
-
-# ==========================================
-# HOME API
-# ==========================================
+# HOME API---------------------------------------------------
 
 @app.get("/")
 def home():
@@ -75,10 +63,7 @@ def home():
         "message": "Student Marks Predictor API is running"
     }
 
-
-# ==========================================
-# HEALTH CHECK API
-# ==========================================
+# HEALTH CHECK API---------------------------------------
 
 @app.get("/health")
 def health_check():
@@ -87,10 +72,7 @@ def health_check():
         "status": "healthy"
     }
 
-
-# ==========================================
-# PREDICTION API
-# ==========================================
+# PREDICTION API-------------------------------------
 
 @app.post("/predict")
 def predict_marks(data: PredictionRequest):
@@ -124,10 +106,7 @@ def predict_marks(data: PredictionRequest):
             detail=f"Prediction failed: {str(e)}"
         )
 
-
-# ==========================================
-# GET ALL PREDICTIONS
-# ==========================================
+# GET ALL PREDICTIONS-------------------------------------
 
 @app.get("/predictions")
 def get_predictions():
@@ -139,10 +118,7 @@ def get_predictions():
         "predictions": records
     }
 
-
-# ==========================================
-# SEARCH PREDICTION BY NAME
-# ==========================================
+# SEARCH PREDICTION BY NAME----------------------------------
 
 @app.get("/predictions/search/{name}")
 def search_predictions(name: str):
@@ -154,10 +130,7 @@ def search_predictions(name: str):
         "predictions": records
     }
 
-
-# ==========================================
-# SEARCH PREDICTION BY ID
-# ==========================================
+# SEARCH PREDICTION BY ID----------------------------------
 
 @app.get("/predictions/{prediction_id}")
 def get_prediction(prediction_id: int):
@@ -181,9 +154,7 @@ def get_prediction(prediction_id: int):
     "predicted_marks": record["predicted_marks"]
 }
 
-# ==========================================
-# UPDATE PREDICTION
-# ==========================================
+# UPDATE PREDICTION---------------------------------
 
 @app.put("/predictions/{prediction_id}")
 def update_prediction_api(
@@ -235,10 +206,7 @@ def update_prediction_api(
         )
     }
 
-
-# ==========================================
-# DELETE PREDICTION
-# ==========================================
+# DELETE PREDICTION---------------------------------
 
 @app.delete("/predictions/{prediction_id}")
 def delete_prediction_api(
@@ -261,9 +229,7 @@ def delete_prediction_api(
         "id": prediction_id
     }
 
-    # ==========================================
-# TEST PREDICTION SERVER ERROR
-# ==========================================
+# TEST PREDICTION SERVER ERROR-----------------------------
 
 def test_prediction_server_error(monkeypatch):
 

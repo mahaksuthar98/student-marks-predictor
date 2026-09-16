@@ -1,9 +1,6 @@
 import mysql.connector
 
-
-# ==============================
-# MySQL Database Configuration
-# ==============================
+# MySQL Database Configuration---------------------------
 
 DB_CONFIG = {
     "host": "localhost",
@@ -12,18 +9,12 @@ DB_CONFIG = {
     "database": "student_marks_db"
 }
 
-
-# ==============================
-# Database Connection
-# ==============================
+# Database Connection---------------------------
 
 def get_connection():
     return mysql.connector.connect(**DB_CONFIG)
 
-
-# ==============================
-# Insert Prediction
-# ==============================
+# Insert Prediction-------------------------------
 
 def insert_prediction(
     student_name,
@@ -78,10 +69,7 @@ def insert_prediction(
         if connection:
             connection.close()
 
-
-# ==============================
-# Get All Predictions
-# ==============================
+# Get All Predictions---------------------------------
 
 def get_all_predictions():
     connection = None
@@ -122,10 +110,7 @@ def get_all_predictions():
         if connection:
             connection.close()
 
-
-# ==============================
-# Get Prediction By ID
-# ==============================
+# Get Prediction By ID----------------------------------------
 
 def get_prediction_by_id(prediction_id):
     connection = None
@@ -166,10 +151,7 @@ def get_prediction_by_id(prediction_id):
         if connection:
             connection.close()
 
-
-# ==============================
-# Search Predictions By Name
-# ==============================
+# Search Predictions By Name---------------------------
 
 def search_predictions_by_name(name):
     connection = None
@@ -211,10 +193,7 @@ def search_predictions_by_name(name):
         if connection:
             connection.close()
 
-
-# ==============================
-# Update Prediction
-# ==============================
+# Update Prediction----------------------------------
 
 def update_prediction(
     prediction_id,
@@ -272,10 +251,7 @@ def update_prediction(
         if connection:
             connection.close()
 
-
-# ==============================
-# Delete Prediction
-# ==============================
+# Delete Prediction--------------------------------
 
 def delete_prediction(prediction_id):
     connection = None
