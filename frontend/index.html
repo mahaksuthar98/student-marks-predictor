@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Marks Predictor</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        .header {
+            background: #1f4e79;
+            color: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            font-size: 15px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .card h3 {
+            font-size: 15px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .card p {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1f4e79;
+        }
+
+        .form-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .form-card h2 {
+            margin-bottom: 20px;
+            color: #1f4e79;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 6px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1f4e79;
+        }
+
+        .button-area {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            padding: 11px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .primary-btn {
+            background: #1f4e79;
+            color: white;
+        }
+
+        .primary-btn:hover {
+            background: #163a5c;
+        }
+
+        .secondary-btn {
+            background: #777;
+            color: white;
+        }
+
+        .result-card {
+            background: #e8f4ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            display: none;
+        }
+
+        .result-card h2 {
+            color: #1f4e79;
+            margin-bottom: 10px;
+        }
+
+        .result-marks {
+            font-size: 35px;
+            font-weight: bold;
+            color: #1f4e79;
+        }
+
+        .search-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .search-card h2 {
+            color: #1f4e79;
+            margin-bottom: 15px;
+        }
+
+        .search-area {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .search-area input {
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            min-width: 200px;
+        }
+
+        .table-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            overflow-x: auto;
+        }
+
+        .table-card h2 {
+            color: #1f4e79;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #1f4e79;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .edit-btn {
+            background: #f0ad4e;
+            color: white;
+            padding: 6px 10px;
+            margin-right: 4px;
+        }
+
+        .delete-btn {
+            background: #d9534f;
+            color: white;
+            padding: 6px 10px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .chart-card h2 {
+            color: #1f4e79;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            height: 280px;
+            padding: 20px;
+            border-bottom: 1px solid #ccc;
+            overflow-x: auto;
+        }
+
+        .bar-wrapper {
+            min-width: 60px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        .bar {
+            width: 40px;
+            background: #1f4e79;
+            border-radius: 5px 5px 0 0;
+            min-height: 5px;
+        }
+
+        .bar-value {
+            font-size: 12px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .bar-label {
+            font-size: 11px;
+            margin-top: 8px;
+            white-space: nowrap;
+        }
+
+        .message {
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+
+            .dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 95%;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .search-area {
+                flex-direction: column;
+            }
+
+            .search-area input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
+            <h1>Student Marks Predictor</h1>
+            <p>Machine Learning Based Student Performance Prediction</p>
+        </div>
+
+        <!-- MESSAGE -->
+        <div id="messageBox" class="message"></div>
+
+        <!-- DASHBOARD -->
+        <div class="dashboard">
+
+            <div class="card">
+                <h3>Total Predictions</h3>
+                <p id="totalPredictions">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Average Marks</h3>
+                <p id="averageMarks">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Highest Marks</h3>
+                <p id="highestMarks">0</p>
+            </div>
+
+            <div class="card">
+                <h3>Lowest Marks</h3>
+                <p id="lowestMarks">0</p>
+            </div>
+
+        </div>
+
+        <!-- PREDICTION FORM -->
+        <div class="form-card" id="formCard">
+
+            <h2 id="formTitle">Predict Student Marks</h2>
+
+            <form id="predictionForm">
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+                        <label for="studentName">Student Name</label>
+                        <input
+                            type="text"
+                            id="studentName"
+                            placeholder="Enter student name"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="studyHours">Study Hours</label>
+                        <input
+                            type="number"
+                            id="studyHours"
+                            placeholder="Example: 7"
+                            step="0.1"
+                            min="0"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="attendance">Attendance (%)</label>
+                        <input
+                            type="number"
+                            id="attendance"
+                            placeholder="Example: 80"
+                            step="0.1"
+                            min="0"
+                            max="100"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="previousMarks">Previous Marks</label>
+                        <input
+                            type="number"
+                            id="previousMarks"
+                            placeholder="Example: 75"
+                            step="0.1"
+                            min="0"
+                            max="100"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="assignmentScore">Assignment Score</label>
+                        <input
+                            type="number"
+                            id="assignmentScore"
+                            placeholder="Example: 80"
+                            step="0.1"
+                            min="0"
+                            max="100"
+                            required
+                        >
+                    </div>
+
+                </div>
+
+                <div class="button-area">
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                        id="submitBtn"
+                    >
+                        Predict Marks
+                    </button>
+
+                    <button
+                        type="button"
+                        class="secondary-btn"
+                        onclick="resetForm()"
+                    >
+                        Reset
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+        <!-- RESULT -->
+        <div class="result-card" id="resultCard">
+
+            <h2>Prediction Result</h2>
+
+            <p>
+                Student:
+                <strong id="resultStudent"></strong>
+            </p>
+
+            <p>
+                Predicted Final Marks:
+                <span class="result-marks" id="predictedMarks">0</span>
+            </p>
+
+        </div>
+
+        <!-- SEARCH -->
+        <div class="search-card">
+
+            <h2>Search Predictions</h2>
+
+            <div class="search-area">
+
+                <input
+                    type="text"
+                    id="searchName"
+                    placeholder="Search by student name"
+                >
+
+                <button
+                    type="button"
+                    class="primary-btn"
+                    onclick="searchByName()"
+                >
+                    Search Name
+                </button>
+
+                <input
+                    type="number"
+                    id="searchId"
+                    placeholder="Search by ID"
+                >
+
+                <button
+                    type="button"
+                    class="primary-btn"
+                    onclick="searchById()"
+                >
+                    Search ID
+                </button>
+
+                <button
+                    type="button"
+                    class="secondary-btn"
+                    onclick="showAllPredictions()"
+                >
+                    Show All
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- TABLE -->
+        <div class="table-card">
+
+            <h2>Prediction Records</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Student Name</th>
+                        <th>Study Hours</th>
+                        <th>Attendance</th>
+                        <th>Previous Marks</th>
+                        <th>Assignment Score</th>
+                        <th>Predicted Marks</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="predictionTable">
+
+                    <tr>
+                        <td colspan="8">Loading...</td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        <!-- CHART -->
+        <div class="chart-card">
+
+            <h2>Predicted Marks Chart</h2>
+
+            <div
+                id="chart"
+                class="chart-container"
+            >
+            </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+
+            Student Marks Predictor |
+            Python + ML + FastAPI + MySQL
+
+        </div>
+
+    </div>
+
+    <!-- IMPORTANT: ONLY EXTERNAL JAVASCRIPT -->
+    <script src="script.js"></script>
+
+</body>
+
+</html>
