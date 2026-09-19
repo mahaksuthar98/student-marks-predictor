@@ -1,16 +1,7 @@
 const API_URL = "http://127.0.0.1:8000";
 
-const predictionForm =
-    document.getElementById("predictionForm");
-
-const resetBtn =
-    document.getElementById("resetBtn");
-
-const predictBtn =
-    document.getElementById("predictBtn");
-
-const messageBox =
-    document.getElementById("messageBox");
+const editForm =
+    document.getElementById("editForm");
 
 const studentName =
     document.getElementById("studentName");
@@ -27,31 +18,34 @@ const previousMarks =
 const assignmentScore =
     document.getElementById("assignmentScore");
 
+const updateBtn =
+    document.getElementById("updateBtn");
 
-function showMessage(message, type = "info") {
+const viewPredictionBtn =
+    document.getElementById("viewPredictionBtn");
 
-    messageBox.textContent =
-        message;
+const messageBox =
+    document.getElementById("messageBox");
+
+
+const recordId =
+    sessionStorage.getItem(
+        "editPredictionId"
+    );
+
+
+function showMessage(message, type = "error") {
+
+    messageBox.textContent = message;
 
     messageBox.className =
         `message ${type}-message`;
 
-    messageBox.style.display =
-        "block";
+    messageBox.style.display = "block";
 }
 
 
-function hideMessage() {
-
-    messageBox.style.display =
-        "none";
-}
-
-
-function validateInput() {
-
-    const name =
-        studentName.value.trim();
+function validateForm() {
 
     const hours =
         Number(studyHours.value);
@@ -66,83 +60,56 @@ function validateInput() {
         Number(assignmentScore.value);
 
 
-    if (!name) {
-
+    if (!studentName.value.trim()) {
         showMessage(
-            "Please enter the student's name.",
+            "Student name is required.",
             "warning"
         );
-
-        studentName.focus();
-
         return false;
     }
 
 
-    if (
-        Number.isNaN(hours) ||
-        hours < 0 ||
-        hours > 24
-    ) {
-
+    if (hours < 0 || hours > 24) {
         showMessage(
             "Study hours must be between 0 and 24.",
             "warning"
         );
-
-        studyHours.focus();
-
         return false;
     }
 
 
     if (
-        Number.isNaN(attendanceValue) ||
         attendanceValue < 0 ||
         attendanceValue > 100
     ) {
-
         showMessage(
             "Attendance must be between 0 and 100.",
             "warning"
         );
-
-        attendance.focus();
-
         return false;
     }
 
 
     if (
-        Number.isNaN(previous) ||
         previous < 0 ||
         previous > 100
     ) {
-
         showMessage(
             "Previous marks must be between 0 and 100.",
             "warning"
         );
-
-        previousMarks.focus();
-
         return false;
     }
 
 
     if (
-        Number.isNaN(assignment) ||
         assignment < 0 ||
         assignment > 100
     ) {
-
         showMessage(
             "Assignment score must be between 0 and 100.",
             "warning"
         );
-
-        assignmentScore.focus();
-
         return false;
     }
 
@@ -151,36 +118,81 @@ function validateInput() {
 }
 
 
-resetBtn.addEventListener(
-    "click",
-    () => {
+async function loadRecord() {
 
-        predictionForm.reset();
+    if (!recordId) {
 
-        hideMessage();
+        window.location.href =
+            "records.html";
 
-        studentName.focus();
-
+        return;
     }
-);
 
 
-predictionForm.addEventListener(
+    try {
+
+        const response =
+            await fetch(
+                `${API_URL}/predictions/${recordId}`
+            );
+
+
+        if (!response.ok) {
+            throw new Error();
+        }
+
+
+        const record =
+            await response.json();
+
+
+        studentName.value =
+            record.student_name ?? "";
+
+        studyHours.value =
+            record.study_hours ?? "";
+
+        attendance.value =
+            record.attendance ?? "";
+
+        previousMarks.value =
+            record.previous_marks ?? "";
+
+        assignmentScore.value =
+            record.assignment_score ?? "";
+
+
+        sessionStorage.setItem(
+            "viewPrediction",
+            JSON.stringify(record)
+        );
+
+
+    } catch {
+
+        showMessage(
+            "Unable to load this prediction record."
+        );
+    }
+}
+
+
+editForm.addEventListener(
     "submit",
     async event => {
 
         event.preventDefault();
 
 
-        if (!validateInput()) {
+        if (!validateForm()) {
             return;
         }
 
 
-        predictBtn.disabled = true;
+        updateBtn.disabled = true;
 
-        predictBtn.textContent =
-            "Predicting...";
+        updateBtn.textContent =
+            "Updating...";
 
 
         try {
@@ -207,9 +219,9 @@ predictionForm.addEventListener(
 
             const response =
                 await fetch(
-                    `${API_URL}/predict`,
+                    `${API_URL}/predictions/${recordId}`,
                     {
-                        method: "POST",
+                        method: "PUT",
 
                         headers: {
                             "Content-Type":
@@ -229,23 +241,24 @@ predictionForm.addEventListener(
 
                 throw new Error(
                     errorText ||
-                    "Prediction failed."
+                    "Update failed."
                 );
             }
 
 
-            const result =
+            const updatedRecord =
                 await response.json();
 
 
-            /*
-             * Store the complete response.
-             * result.js will display it.
-             */
-
             sessionStorage.setItem(
                 "predictionResult",
-                JSON.stringify(result)
+                JSON.stringify(updatedRecord)
+            );
+
+
+            sessionStorage.setItem(
+                "viewPrediction",
+                JSON.stringify(updatedRecord)
             );
 
 
@@ -255,23 +268,36 @@ predictionForm.addEventListener(
 
         } catch (error) {
 
-            console.error(
-                "Prediction error:",
-                error
-            );
-
+            console.error(error);
 
             showMessage(
-                "Unable to generate prediction. Please check FastAPI.",
+                "Unable to update the prediction.",
                 "error"
             );
 
 
-            predictBtn.disabled = false;
+            updateBtn.disabled = false;
 
-            predictBtn.textContent =
-                "Predict Final Marks";
+            updateBtn.textContent =
+                "Update Prediction";
         }
 
     }
+);
+
+
+viewPredictionBtn.addEventListener(
+    "click",
+    () => {
+
+        window.location.href =
+            "view.html";
+
+    }
+);
+
+
+document.addEventListener(
+    "DOMContentLoaded",
+    loadRecord
 );

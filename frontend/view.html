@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>View Prediction | Student Marks Predictor</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">SM</div>
+
+            <div class="brand-text">
+                <h2>Student Marks</h2>
+                <span>Prediction System</span>
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-title">
+            NAVIGATION
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="records.html" class="nav-item active">
+                <span class="nav-icon">▤</span>
+                <span>Records</span>
+            </a>
+
+            <a href="trash.html" class="nav-item">
+                <span class="nav-icon">♲</span>
+                <span>Trash</span>
+            </a>
+
+            <a href="about.html" class="nav-item">
+                <span class="nav-icon">ⓘ</span>
+                <span>About Project</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+            <strong>ML Prediction System</strong>
+            <span>Version 1.0</span>
+        </div>
+
+    </aside>
+
+
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    View Prediction
+                </h1>
+
+                <p>
+                    Detailed student prediction information
+                </p>
+
+            </div>
+
+
+            <a
+                href="records.html"
+                class="secondary-btn"
+            >
+                ← Back to Records
+            </a>
+
+        </header>
+
+
+
+        <section class="page-content">
+
+
+            <div class="breadcrumb">
+
+                <a href="index.html">Dashboard</a>
+
+                <span>/</span>
+
+                <a href="records.html">Records</a>
+
+                <span>/</span>
+
+                <strong>View</strong>
+
+            </div>
+
+
+
+            <div
+                id="messageBox"
+                class="message"
+                style="display:none;"
+            ></div>
+
+
+
+            <div class="detail-card">
+
+
+                <div class="detail-card-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            PREDICTION DETAILS
+                        </span>
+
+                        <h2>
+                            Student Prediction
+                        </h2>
+
+                    </div>
+
+
+                    <div class="detail-actions">
+
+                        <button
+                            id="editPredictionBtn"
+                            class="edit-btn"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            id="deletePredictionBtn"
+                            class="delete-btn"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="prediction-result">
+
+                    <span>
+                        Predicted Final Marks
+                    </span>
+
+                    <strong id="predictedMarks">
+                        --
+                    </strong>
+
+                </div>
+
+
+
+                <div class="detail-student">
+
+                    <div
+                        class="student-avatar large"
+                        id="studentAvatar"
+                    >
+                        ?
+                    </div>
+
+                    <div>
+
+                        <span>
+                            STUDENT
+                        </span>
+
+                        <h3 id="studentName">
+                            --
+                        </h3>
+
+                        <p>
+                            Prediction ID:
+                            <strong id="predictionId">--</strong>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="detail-grid">
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Study Hours
+                        </span>
+
+                        <strong id="studyHours">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Attendance
+                        </span>
+
+                        <strong id="attendance">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Previous Marks
+                        </span>
+
+                        <strong id="previousMarks">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Assignment Score
+                        </span>
+
+                        <strong id="assignmentScore">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <script src="common.js"></script>
+
+    <script src="view.js"></script>
+
+
+</body>
+
+</html>

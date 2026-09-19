@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Deleted Prediction | Student Marks Predictor</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">SM</div>
+
+            <div class="brand-text">
+                <h2>Student Marks</h2>
+                <span>Prediction System</span>
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-title">
+            NAVIGATION
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="records.html" class="nav-item">
+                <span class="nav-icon">▤</span>
+                <span>Records</span>
+            </a>
+
+            <a href="trash.html" class="nav-item active">
+                <span class="nav-icon">♲</span>
+                <span>Trash</span>
+            </a>
+
+            <a href="about.html" class="nav-item">
+                <span class="nav-icon">ⓘ</span>
+                <span>About Project</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+            <strong>ML Prediction System</strong>
+            <span>Version 1.0</span>
+        </div>
+
+    </aside>
+
+
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Deleted Prediction
+                </h1>
+
+                <p>
+                    View deleted prediction information
+                </p>
+
+            </div>
+
+
+            <a
+                href="trash.html"
+                class="secondary-btn"
+            >
+                ← Back to Trash
+            </a>
+
+        </header>
+
+
+
+        <section class="page-content">
+
+
+            <div class="breadcrumb">
+
+                <a href="index.html">Dashboard</a>
+
+                <span>/</span>
+
+                <a href="trash.html">Trash</a>
+
+                <span>/</span>
+
+                <strong>View</strong>
+
+            </div>
+
+
+
+            <div
+                id="messageBox"
+                class="message"
+                style="display:none;"
+            ></div>
+
+
+
+            <div class="detail-card">
+
+
+                <div class="detail-card-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            DELETED RECORD
+                        </span>
+
+                        <h2>
+                            Deleted Prediction
+                        </h2>
+
+                    </div>
+
+
+                    <span class="deleted-badge">
+                        Deleted
+                    </span>
+
+                </div>
+
+
+
+                <div class="deleted-result">
+
+
+                    <div class="student-cell">
+
+                        <span
+                            class="student-avatar large"
+                            id="studentAvatar"
+                        >
+                            ?
+                        </span>
+
+                        <div>
+
+                            <span>
+                                STUDENT
+                            </span>
+
+                            <h3 id="studentName">
+                                --
+                            </h3>
+
+                            <p>
+                                Prediction ID:
+                                <strong id="predictionId">
+                                    --
+                                </strong>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="deleted-score">
+
+                        <span>
+                            PREDICTED FINAL MARKS
+                        </span>
+
+                        <strong id="predictedMarks">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="detail-grid">
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Study Hours
+                        </span>
+
+                        <strong id="studyHours">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Attendance
+                        </span>
+
+                        <strong id="attendance">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Previous Marks
+                        </span>
+
+                        <strong id="previousMarks">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                    <div class="detail-item">
+
+                        <span>
+                            Assignment Score
+                        </span>
+
+                        <strong id="assignmentScore">
+                            --
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <div class="detail-actions">
+
+                    <button
+                        id="restoreBtn"
+                        class="restore-btn large-action-btn"
+                    >
+                        Restore Prediction
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+    <script src="common.js"></script>
+
+    <script src="trash-view.js"></script>
+
+
+</body>
+
+</html>

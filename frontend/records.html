@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Records | Student Marks Predictor</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- BRAND -->
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                SM
+            </div>
+
+            <div class="brand-text">
+
+                <h2>
+                    Student Marks
+                </h2>
+
+                <span>
+                    Prediction System
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- NAVIGATION TITLE -->
+
+        <div class="sidebar-title">
+            NAVIGATION
+        </div>
+
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <a
+                href="index.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⌂
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="records.html"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    ▤
+                </span>
+
+                <span>
+                    Records
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="trash.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ♲
+                </span>
+
+                <span>
+                    Trash
+                </span>
+
+            </a>
+
+
+
+            <a
+                href="about.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⓘ
+                </span>
+
+                <span>
+                    About Project
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+
+        <!-- SIDEBAR FOOTER -->
+
+        <div class="sidebar-footer">
+
+            <strong>
+                ML Prediction System
+            </strong>
+
+            <span>
+                Version 1.0
+            </span>
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
+
+        <header class="topbar">
+
+
+            <div>
+
+                <h1>
+                    Prediction Records
+                </h1>
+
+                <p>
+                    View, search and manage student prediction records
+                </p>
+
+            </div>
+
+
+
+            <a
+                href="index.html"
+                class="primary-btn"
+            >
+                + New Prediction
+            </a>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             PAGE CONTENT
+             ================================================= -->
+
+        <section class="page-content">
+
+
+
+            <!-- =================================================
+                 RECORDS PAGE HEADER
+                 ================================================= -->
+
+            <div class="records-page-header">
+
+
+                <!-- BREADCRUMB -->
+
+                <div class="records-breadcrumb">
+
+                    <a href="index.html">
+                        Dashboard
+                    </a>
+
+                    <span>
+                        /
+                    </span>
+
+                    <strong>
+                        Records
+                    </strong>
+
+                </div>
+
+
+
+                <!-- HEADER CONTENT -->
+
+                <div class="records-header-content">
+
+
+                    <!-- TITLE AREA -->
+
+                    <div class="records-title-area">
+
+
+                        <span class="records-section-label">
+                            RECORD MANAGEMENT
+                        </span>
+
+
+                        <h2>
+                            Prediction Records
+                        </h2>
+
+
+                        <p>
+                            Search and manage stored student predictions.
+                        </p>
+
+
+                    </div>
+
+
+
+                    <!-- TOTAL RECORDS -->
+
+                    <div class="total-records-card">
+
+
+                        <div class="total-records-icon">
+                            ▤
+                        </div>
+
+
+                        <div class="total-records-info">
+
+
+                            <span class="total-records-label">
+                                TOTAL RECORDS
+                            </span>
+
+
+                            <strong id="recordCount">
+                                0 Records
+                            </strong>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MESSAGE
+                 ================================================= -->
+
+            <div
+                id="recordsMessage"
+                class="message"
+                style="display:none;"
+            ></div>
+
+
+
+            <!-- =================================================
+                 SEARCH PANEL
+                 ================================================= -->
+
+            <div class="records-search-panel">
+
+
+                <!-- SEARCH HEADER -->
+
+                <div class="records-panel-header">
+
+
+                    <div>
+
+                        <span class="section-label">
+                            SEARCH
+                        </span>
+
+
+                        <h3>
+                            Find Records
+                        </h3>
+
+
+                        <p>
+                            Search prediction records using student name or prediction ID.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- SEARCH BODY -->
+
+                <div class="records-search-body">
+
+
+                    <!-- STUDENT NAME -->
+
+                    <div class="record-search-box">
+
+
+                        <label>
+                            Student Name
+                        </label>
+
+
+                        <div class="record-search-control">
+
+
+                            <input
+                                type="text"
+                                id="searchName"
+                                placeholder="Enter student name"
+                            >
+
+
+                            <button
+                                type="button"
+                                id="searchNameBtn"
+                                class="record-search-btn green"
+                            >
+                                Search
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- OR -->
+
+                    <div class="search-divider">
+                        OR
+                    </div>
+
+
+
+                    <!-- PREDICTION ID -->
+
+                    <div class="record-search-box">
+
+
+                        <label>
+                            Prediction ID
+                        </label>
+
+
+                        <div class="record-search-control">
+
+
+                            <input
+                                type="number"
+                                id="searchId"
+                                placeholder="Enter prediction ID"
+                            >
+
+
+                            <button
+                                type="button"
+                                id="searchIdBtn"
+                                class="record-search-btn blue"
+                            >
+                                Search
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- SHOW ALL -->
+
+                    <div class="show-all-area">
+
+
+                        <button
+                            type="button"
+                            id="showAllBtn"
+                            class="show-all-btn"
+                        >
+                            Show All Records
+                        </button>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RECORDS TABLE CARD
+                 ================================================= -->
+
+            <div class="records-table-card">
+
+
+                <!-- TABLE HEADER -->
+
+                <div class="records-table-header">
+
+
+                    <div>
+
+
+                        <span class="section-label">
+                            DATABASE
+                        </span>
+
+
+                        <h3>
+                            All Predictions
+                        </h3>
+
+
+                        <p>
+                            Stored student prediction data
+                        </p>
+
+
+                    </div>
+
+
+
+                    <a
+                        href="index.html"
+                        class="secondary-btn"
+                    >
+                        + Add Prediction
+                    </a>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     TABLE
+                     ================================================= -->
+
+                <div class="table-wrapper">
+
+
+                    <table>
+
+
+                        <thead>
+
+
+                            <tr>
+
+
+                                <th>
+                                    SN.
+                                </th>
+
+
+                                <th>
+                                    Prediction ID
+                                </th>
+
+
+                                <th>
+                                    Student
+                                </th>
+
+
+                                <th>
+                                    Study Hours
+                                </th>
+
+
+                                <th>
+                                    Attendance
+                                </th>
+
+
+                                <th>
+                                    Previous Marks
+                                </th>
+
+
+                                <th>
+                                    Assignment
+                                </th>
+
+
+                                <th>
+                                    Predicted Marks
+                                </th>
+
+
+                                <th>
+                                    Actions
+                                </th>
+
+
+                            </tr>
+
+
+                        </thead>
+
+
+
+                        <tbody id="recordsTable">
+
+                        </tbody>
+
+
+                    </table>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PAGINATION
+                     ================================================= -->
+
+                <div
+                    class="pagination"
+                    id="pagination"
+                ></div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =====================================================
+             FOOTER
+             ===================================================== -->
+
+        <footer class="page-footer">
+
+
+            Student Marks Predictor
+
+
+            <span>
+                •
+            </span>
+
+
+            Machine Learning Prediction System
+
+
+        </footer>
+
+
+    </main>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+         ===================================================== -->
+
+    <script src="common.js"></script>
+
+    <script src="records.js"></script>
+
+
+</body>
+
+</html>

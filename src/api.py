@@ -10,8 +10,12 @@ from .database import (
     get_prediction_by_id,
     search_predictions_by_name,
     update_prediction,
-    delete_prediction
+    delete_prediction,
+    get_deleted_predictions,
+    restore_prediction,
+    permanent_delete_prediction
 )
+
 
 # FASTAPI APPLICATION-----------------------------------------
 
@@ -20,6 +24,7 @@ app = FastAPI(
     description="ML API for predicting student final marks",
     version="1.0.0"
 )
+
 
 # CORS CONFIGURATION----------------------------------------
 
@@ -30,6 +35,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # REQUEST MODEL-------------------------------------------
 
@@ -54,6 +60,7 @@ class PredictionRequest(BaseModel):
         le=100
     )
 
+
 # HOME API---------------------------------------------------
 
 @app.get("/")
@@ -63,6 +70,7 @@ def home():
         "message": "Student Marks Predictor API is running"
     }
 
+
 # HEALTH CHECK API---------------------------------------
 
 @app.get("/health")
@@ -71,6 +79,7 @@ def health_check():
     return {
         "status": "healthy"
     }
+
 
 # PREDICTION API-------------------------------------
 
@@ -106,7 +115,8 @@ def predict_marks(data: PredictionRequest):
             detail=f"Prediction failed: {str(e)}"
         )
 
-# GET ALL PREDICTIONS-------------------------------------
+
+# GET ALL ACTIVE PREDICTIONS-------------------------------------
 
 @app.get("/predictions")
 def get_predictions():
@@ -118,7 +128,8 @@ def get_predictions():
         "predictions": records
     }
 
-# SEARCH PREDICTION BY NAME----------------------------------
+
+# SEARCH ACTIVE PREDICTION BY NAME----------------------------------
 
 @app.get("/predictions/search/{name}")
 def search_predictions(name: str):
@@ -129,6 +140,67 @@ def search_predictions(name: str):
         "count": len(records),
         "predictions": records
     }
+
+
+# GET DELETED PREDICTIONS / TRASH-------------------------------------
+
+@app.get("/trash")
+def get_trash():
+
+    records = get_deleted_predictions()
+
+    return {
+        "count": len(records),
+        "predictions": records
+    }
+
+
+# RESTORE DELETED PREDICTION---------------------------------
+
+@app.patch("/trash/{prediction_id}/restore")
+def restore_prediction_api(
+    prediction_id: int
+):
+
+    restored_rows = restore_prediction(
+        prediction_id
+    )
+
+    if restored_rows == 0:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Deleted prediction not found"
+        )
+
+    return {
+        "message": "Prediction restored successfully",
+        "id": prediction_id
+    }
+
+# PERMANENT DELETE PREDICTION---------------------------------
+
+@app.delete("/trash/{prediction_id}")
+def permanent_delete_prediction_api(
+    prediction_id: int
+):
+
+    deleted_rows = permanent_delete_prediction(
+        prediction_id
+    )
+
+    if deleted_rows == 0:
+
+        raise HTTPException(
+            status_code=404,
+            detail="Deleted prediction not found"
+        )
+
+    return {
+        "message": "Prediction permanently deleted",
+        "id": prediction_id
+    }
+
 
 # SEARCH PREDICTION BY ID----------------------------------
 
@@ -145,14 +217,15 @@ def get_prediction(prediction_id: int):
         )
 
     return {
-    "id": record["id"],
-    "student_name": record["student_name"],
-    "study_hours": record["study_hours"],
-    "attendance": record["attendance"],
-    "previous_marks": record["previous_marks"],
-    "assignment_score": record["assignment_score"],
-    "predicted_marks": record["predicted_marks"]
-}
+        "id": record["id"],
+        "student_name": record["student_name"],
+        "study_hours": record["study_hours"],
+        "attendance": record["attendance"],
+        "previous_marks": record["previous_marks"],
+        "assignment_score": record["assignment_score"],
+        "predicted_marks": record["predicted_marks"]
+    }
+
 
 # UPDATE PREDICTION---------------------------------
 
@@ -206,7 +279,8 @@ def update_prediction_api(
         )
     }
 
-# DELETE PREDICTION---------------------------------
+
+# DELETE / SOFT DELETE PREDICTION---------------------------------
 
 @app.delete("/predictions/{prediction_id}")
 def delete_prediction_api(
@@ -225,43 +299,6 @@ def delete_prediction_api(
         )
 
     return {
-        "message": "Prediction deleted successfully",
+        "message": "Prediction moved to Trash",
         "id": prediction_id
     }
-
-# TEST PREDICTION SERVER ERROR-----------------------------
-
-def test_prediction_server_error(monkeypatch):
-
-    def fake_predict_and_save(
-        student_name,
-        study_hours,
-        attendance,
-        previous_marks,
-        assignment_score
-    ):
-
-        raise Exception("Database connection failed")
-
-    monkeypatch.setattr(
-        api,
-        "predict_and_save",
-        fake_predict_and_save
-    )
-
-    response = client.post(
-        "/predict",
-        json={
-            "student_name": "Test Student",
-            "study_hours": 6,
-            "attendance": 85,
-            "previous_marks": 75,
-            "assignment_score": 80
-        }
-    )
-
-    assert response.status_code == 500
-
-    data = response.json()
-
-    assert "Prediction failed" in data["detail"]

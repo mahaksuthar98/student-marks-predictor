@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Trash | Student Marks Predictor</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-logo">SM</div>
+
+            <div class="brand-text">
+                <h2>Student Marks</h2>
+                <span>Prediction System</span>
+            </div>
+
+        </div>
+
+
+        <div class="sidebar-title">
+            NAVIGATION
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="index.html" class="nav-item">
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="records.html" class="nav-item">
+                <span class="nav-icon">▤</span>
+                <span>Records</span>
+            </a>
+
+            <a href="trash.html" class="nav-item active">
+                <span class="nav-icon">♲</span>
+                <span>Trash</span>
+            </a>
+
+            <a href="about.html" class="nav-item">
+                <span class="nav-icon">ⓘ</span>
+                <span>About Project</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+            <strong>ML Prediction System</strong>
+            <span>Version 1.0</span>
+        </div>
+
+    </aside>
+
+
+
+    <main class="main-content">
+
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Trash
+                </h1>
+
+                <p>
+                    Manage deleted prediction records
+                </p>
+
+            </div>
+
+
+            <a
+                href="index.html"
+                class="primary-btn"
+            >
+                + New Prediction
+            </a>
+
+        </header>
+
+
+
+        <section class="page-content">
+
+
+            <div class="breadcrumb">
+
+                <a href="index.html">Dashboard</a>
+
+                <span>/</span>
+
+                <strong>Trash</strong>
+
+            </div>
+
+
+
+            <div class="trash-page-heading">
+
+                <div>
+
+                    <span class="trash-eyebrow">
+                        TRASH MANAGEMENT
+                    </span>
+
+                    <h2>
+                        Deleted Records
+                    </h2>
+
+                    <p>
+                        Restore or permanently remove deleted predictions.
+                    </p>
+
+                </div>
+
+
+                <div class="trash-count-box">
+
+                    <span>
+                        DELETED RECORDS
+                    </span>
+
+                    <strong id="trashRecordCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+
+            <div
+                id="messageBox"
+                class="message"
+                style="display:none;"
+            ></div>
+
+
+
+            <div class="trash-table-card">
+
+
+                <div class="trash-table-header">
+
+                    <div>
+
+                        <span class="section-label">
+                            DATABASE
+                        </span>
+
+                        <h3>
+                            Trash Records
+                        </h3>
+
+                        <p>
+                            Deleted student prediction data
+                        </p>
+
+                    </div>
+
+
+                    <a
+                        href="records.html"
+                        class="secondary-btn"
+                    >
+                        View Records
+                    </a>
+
+                </div>
+
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>SN.</th>
+                                <th>Prediction ID</th>
+                                <th>Student</th>
+                                <th>Study Hours</th>
+                                <th>Attendance</th>
+                                <th>Previous Marks</th>
+                                <th>Assignment</th>
+                                <th>Predicted Marks</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="trashTable"></tbody>
+
+                    </table>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div
+                id="trashEmptyState"
+                class="trash-empty-state"
+                style="display:none;"
+            >
+
+                <div class="trash-empty-icon">
+                    ♲
+                </div>
+
+                <h3>
+                    Trash is Empty
+                </h3>
+
+                <p>
+                    Deleted prediction records will appear here.
+                </p>
+
+                <a
+                    href="records.html"
+                    class="primary-btn"
+                >
+                    View Records
+                </a>
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+
+    <script src="common.js"></script>
+
+    <script src="trash.js"></script>
+
+
+</body>
+
+</html>

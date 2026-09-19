@@ -2,602 +2,446 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Student Marks Predictor</title>
 
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
-        body {
-            background: #f4f6f9;
-            color: #333;
-        }
-
-        .container {
-            width: 95%;
-            max-width: 1200px;
-            margin: 30px auto;
-        }
-
-        .header {
-            background: #1f4e79;
-            color: white;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        .header h1 {
-            margin-bottom: 8px;
-        }
-
-        .header p {
-            font-size: 15px;
-        }
-
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .card h3 {
-            font-size: 15px;
-            margin-bottom: 10px;
-            color: #666;
-        }
-
-        .card p {
-            font-size: 28px;
-            font-weight: bold;
-            color: #1f4e79;
-        }
-
-        .form-card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .form-card h2 {
-            margin-bottom: 20px;
-            color: #1f4e79;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            margin-bottom: 6px;
-            font-weight: bold;
-        }
-
-        .form-group input {
-            padding: 11px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 15px;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: #1f4e79;
-        }
-
-        .button-area {
-            margin-top: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        button {
-            padding: 11px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .primary-btn {
-            background: #1f4e79;
-            color: white;
-        }
-
-        .primary-btn:hover {
-            background: #163a5c;
-        }
-
-        .secondary-btn {
-            background: #777;
-            color: white;
-        }
-
-        .result-card {
-            background: #e8f4ff;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            display: none;
-        }
-
-        .result-card h2 {
-            color: #1f4e79;
-            margin-bottom: 10px;
-        }
-
-        .result-marks {
-            font-size: 35px;
-            font-weight: bold;
-            color: #1f4e79;
-        }
-
-        .search-card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .search-card h2 {
-            color: #1f4e79;
-            margin-bottom: 15px;
-        }
-
-        .search-area {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .search-area input {
-            padding: 11px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            min-width: 200px;
-        }
-
-        .table-card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            overflow-x: auto;
-        }
-
-        .table-card h2 {
-            color: #1f4e79;
-            margin-bottom: 15px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 850px;
-        }
-
-        th,
-        td {
-            padding: 12px;
-            border-bottom: 1px solid #ddd;
-            text-align: center;
-        }
-
-        th {
-            background: #1f4e79;
-            color: white;
-        }
-
-        tr:hover {
-            background: #f5f5f5;
-        }
-
-        .edit-btn {
-            background: #f0ad4e;
-            color: white;
-            padding: 6px 10px;
-            margin-right: 4px;
-        }
-
-        .delete-btn {
-            background: #d9534f;
-            color: white;
-            padding: 6px 10px;
-        }
-
-        .chart-card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-        }
-
-        .chart-card h2 {
-            color: #1f4e79;
-            margin-bottom: 20px;
-        }
-
-        .chart-container {
-            display: flex;
-            align-items: flex-end;
-            gap: 12px;
-            height: 280px;
-            padding: 20px;
-            border-bottom: 1px solid #ccc;
-            overflow-x: auto;
-        }
-
-        .bar-wrapper {
-            min-width: 60px;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-        }
-
-        .bar {
-            width: 40px;
-            background: #1f4e79;
-            border-radius: 5px 5px 0 0;
-            min-height: 5px;
-        }
-
-        .bar-value {
-            font-size: 12px;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        .bar-label {
-            font-size: 11px;
-            margin-top: 8px;
-            white-space: nowrap;
-        }
-
-        .message {
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 6px;
-            display: none;
-        }
-
-        .success {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        @media (max-width: 768px) {
-
-            .dashboard {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .container {
-                width: 95%;
-            }
-        }
-
-        @media (max-width: 500px) {
-
-            .dashboard {
-                grid-template-columns: 1fr;
-            }
-
-            .search-area {
-                flex-direction: column;
-            }
-
-            .search-area input {
-                width: 100%;
-            }
-        }
-    </style>
 </head>
+
 
 <body>
 
-    <div class="container">
 
-        <!-- HEADER -->
-        <div class="header">
-            <h1>Student Marks Predictor</h1>
-            <p>Machine Learning Based Student Performance Prediction</p>
-        </div>
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
 
-        <!-- MESSAGE -->
-        <div id="messageBox" class="message"></div>
+    <aside class="sidebar">
 
-        <!-- DASHBOARD -->
-        <div class="dashboard">
+        <div class="brand">
 
-            <div class="card">
-                <h3>Total Predictions</h3>
-                <p id="totalPredictions">0</p>
+            <div class="brand-logo">
+                SM
             </div>
 
-            <div class="card">
-                <h3>Average Marks</h3>
-                <p id="averageMarks">0</p>
-            </div>
+            <div class="brand-text">
 
-            <div class="card">
-                <h3>Highest Marks</h3>
-                <p id="highestMarks">0</p>
-            </div>
+                <h2>Student Marks</h2>
 
-            <div class="card">
-                <h3>Lowest Marks</h3>
-                <p id="lowestMarks">0</p>
-            </div>
-
-        </div>
-
-        <!-- PREDICTION FORM -->
-        <div class="form-card" id="formCard">
-
-            <h2 id="formTitle">Predict Student Marks</h2>
-
-            <form id="predictionForm">
-
-                <div class="form-grid">
-
-                    <div class="form-group">
-                        <label for="studentName">Student Name</label>
-                        <input
-                            type="text"
-                            id="studentName"
-                            placeholder="Enter student name"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="studyHours">Study Hours</label>
-                        <input
-                            type="number"
-                            id="studyHours"
-                            placeholder="Example: 7"
-                            step="0.1"
-                            min="0"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="attendance">Attendance (%)</label>
-                        <input
-                            type="number"
-                            id="attendance"
-                            placeholder="Example: 80"
-                            step="0.1"
-                            min="0"
-                            max="100"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="previousMarks">Previous Marks</label>
-                        <input
-                            type="number"
-                            id="previousMarks"
-                            placeholder="Example: 75"
-                            step="0.1"
-                            min="0"
-                            max="100"
-                            required
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label for="assignmentScore">Assignment Score</label>
-                        <input
-                            type="number"
-                            id="assignmentScore"
-                            placeholder="Example: 80"
-                            step="0.1"
-                            min="0"
-                            max="100"
-                            required
-                        >
-                    </div>
-
-                </div>
-
-                <div class="button-area">
-
-                    <button
-                        type="submit"
-                        class="primary-btn"
-                        id="submitBtn"
-                    >
-                        Predict Marks
-                    </button>
-
-                    <button
-                        type="button"
-                        class="secondary-btn"
-                        onclick="resetForm()"
-                    >
-                        Reset
-                    </button>
-
-                </div>
-
-            </form>
-
-        </div>
-
-        <!-- RESULT -->
-        <div class="result-card" id="resultCard">
-
-            <h2>Prediction Result</h2>
-
-            <p>
-                Student:
-                <strong id="resultStudent"></strong>
-            </p>
-
-            <p>
-                Predicted Final Marks:
-                <span class="result-marks" id="predictedMarks">0</span>
-            </p>
-
-        </div>
-
-        <!-- SEARCH -->
-        <div class="search-card">
-
-            <h2>Search Predictions</h2>
-
-            <div class="search-area">
-
-                <input
-                    type="text"
-                    id="searchName"
-                    placeholder="Search by student name"
-                >
-
-                <button
-                    type="button"
-                    class="primary-btn"
-                    onclick="searchByName()"
-                >
-                    Search Name
-                </button>
-
-                <input
-                    type="number"
-                    id="searchId"
-                    placeholder="Search by ID"
-                >
-
-                <button
-                    type="button"
-                    class="primary-btn"
-                    onclick="searchById()"
-                >
-                    Search ID
-                </button>
-
-                <button
-                    type="button"
-                    class="secondary-btn"
-                    onclick="showAllPredictions()"
-                >
-                    Show All
-                </button>
+                <span>Prediction System</span>
 
             </div>
 
         </div>
 
-        <!-- TABLE -->
-        <div class="table-card">
 
-            <h2>Prediction Records</h2>
-
-            <table>
-
-                <thead>
-
-                    <tr>
-                        <th>ID</th>
-                        <th>Student Name</th>
-                        <th>Study Hours</th>
-                        <th>Attendance</th>
-                        <th>Previous Marks</th>
-                        <th>Assignment Score</th>
-                        <th>Predicted Marks</th>
-                        <th>Actions</th>
-                    </tr>
-
-                </thead>
-
-                <tbody id="predictionTable">
-
-                    <tr>
-                        <td colspan="8">Loading...</td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
+        <div class="sidebar-title">
+            NAVIGATION
         </div>
 
-        <!-- CHART -->
-        <div class="chart-card">
 
-            <h2>Predicted Marks Chart</h2>
+        <nav class="sidebar-nav">
 
-            <div
-                id="chart"
-                class="chart-container"
+            <a
+                href="index.html"
+                class="nav-item active"
             >
+                <span class="nav-icon">⌂</span>
+                <span>Dashboard</span>
+            </a>
+
+
+            <a
+                href="records.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">▤</span>
+                <span>Records</span>
+            </a>
+
+
+            <a
+                href="trash.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">♲</span>
+                <span>Trash</span>
+            </a>
+
+
+            <a
+                href="about.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">ⓘ</span>
+                <span>About Project</span>
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <strong>
+                ML Prediction System
+            </strong>
+
+            <span>
+                Version 1.0
+            </span>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div>
+
+                <h1>
+                    Student Marks Predictor
+                </h1>
+
+                <p>
+                    Enter student information to predict final marks
+                </p>
+
             </div>
 
-        </div>
 
-        <!-- FOOTER -->
-        <div class="footer">
+            <div class="system-status">
 
-            Student Marks Predictor |
-            Python + ML + FastAPI + MySQL
+                <span class="status-dot"></span>
 
-        </div>
+                <span>
+                    System Online
+                </span>
 
-    </div>
+            </div>
 
-    <!-- IMPORTANT: ONLY EXTERNAL JAVASCRIPT -->
+        </header>
+
+
+
+        <!-- CONTENT -->
+
+        <section class="page-content">
+
+
+            <div class="dashboard-container">
+
+
+                <!-- PREDICTION CARD -->
+
+                <div class="prediction-card">
+
+
+                    <div class="prediction-card-header">
+
+                        <div>
+
+                            <span class="card-eyebrow">
+                                MACHINE LEARNING
+                            </span>
+
+                            <h2>
+                                Predict Final Marks
+                            </h2>
+
+                            <p>
+                                Enter the student's academic information below.
+                            </p>
+
+                        </div>
+
+
+                        <div class="prediction-icon">
+                            ML
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- MESSAGE -->
+
+                    <div
+                        id="messageBox"
+                        class="message"
+                        style="display:none;"
+                    ></div>
+
+
+
+                    <!-- FORM -->
+
+                    <form
+                        id="predictionForm"
+                        class="prediction-form"
+                    >
+
+
+                        <div class="form-section">
+
+                            <div class="form-section-title">
+
+                                <span class="form-section-number">
+                                    01
+                                </span>
+
+                                <div>
+
+                                    <h3>
+                                        Student Information
+                                    </h3>
+
+                                    <p>
+                                        Provide the required academic details to generate a prediction.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- STUDENT NAME -->
+
+                            <div class="form-group full-width">
+
+                                <label for="studentName">
+                                    Student Name
+                                </label>
+
+                                <input
+                                    type="text"
+                                    id="studentName"
+                                    name="student_name"
+                                    placeholder="Enter student's full name"
+                                    autocomplete="off"
+                                    required
+                                >
+
+                                <small>
+                                    Enter the student's full name.
+                                </small>
+
+                            </div>
+
+
+                            <div class="form-grid">
+
+
+                                <!-- STUDY HOURS -->
+
+                                <div class="form-group">
+
+                                    <label for="studyHours">
+                                        Study Hours
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="studyHours"
+                                        name="study_hours"
+                                        min="0"
+                                        max="24"
+                                        step="0.01"
+                                        placeholder="e.g. 6"
+                                        required
+                                    >
+
+                                    <small>
+                                        Daily study hours (0–24).
+                                    </small>
+
+                                </div>
+
+
+                                <!-- ATTENDANCE -->
+
+                                <div class="form-group">
+
+                                    <label for="attendance">
+                                        Attendance (%)
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="attendance"
+                                        name="attendance"
+                                        min="0"
+                                        max="100"
+                                        step="0.01"
+                                        placeholder="e.g. 85"
+                                        required
+                                    >
+
+                                    <small>
+                                        Attendance percentage (0–100).
+                                    </small>
+
+                                </div>
+
+
+                                <!-- PREVIOUS MARKS -->
+
+                                <div class="form-group">
+
+                                    <label for="previousMarks">
+                                        Previous Marks
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="previousMarks"
+                                        name="previous_marks"
+                                        min="0"
+                                        max="100"
+                                        step="0.01"
+                                        placeholder="e.g. 75"
+                                        required
+                                    >
+
+                                    <small>
+                                        Previous examination marks (0–100).
+                                    </small>
+
+                                </div>
+
+
+                                <!-- ASSIGNMENT -->
+
+                                <div class="form-group">
+
+                                    <label for="assignmentScore">
+                                        Assignment Score
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="assignmentScore"
+                                        name="assignment_score"
+                                        min="0"
+                                        max="100"
+                                        step="0.01"
+                                        placeholder="e.g. 80"
+                                        required
+                                    >
+
+                                    <small>
+                                        Assignment score (0–100).
+                                    </small>
+
+                                </div>
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- FORM BUTTONS -->
+
+                        <div class="prediction-form-actions">
+
+                            <button
+                                type="button"
+                                id="resetBtn"
+                                class="secondary-btn"
+                            >
+                                Clear Form
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                id="predictBtn"
+                                class="primary-btn prediction-btn"
+                            >
+                                Predict Final Marks
+                            </button>
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+
+
+                <!-- HOW IT WORKS -->
+
+                <div class="prediction-info">
+
+                    <div class="info-icon">
+                        i
+                    </div>
+
+                    <div>
+
+                        <h3>
+                            How the prediction works
+                        </h3>
+
+                        <p>
+                            The machine learning model uses study hours,
+                            attendance, previous marks and assignment score
+                            to estimate the student's final marks.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <footer class="page-footer">
+
+            Student Marks Predictor
+            <span>•</span>
+            Machine Learning Prediction System
+
+        </footer>
+
+
+    </main>
+
+
+
+    <script src="common.js"></script>
+
     <script src="script.js"></script>
+
 
 </body>
 

@@ -71,6 +71,8 @@ def insert_prediction(
 
 # Get All Predictions---------------------------------
 
+# Get All Active Predictions---------------------------------
+
 def get_all_predictions():
     connection = None
     cursor = None
@@ -90,6 +92,7 @@ def get_all_predictions():
                 assignment_score,
                 predicted_marks
             FROM predictions
+            WHERE is_deleted = 0
             ORDER BY id DESC
         """
 
@@ -112,6 +115,8 @@ def get_all_predictions():
 
 # Get Prediction By ID----------------------------------------
 
+# Get Active Prediction By ID---------------------------------
+
 def get_prediction_by_id(prediction_id):
     connection = None
     cursor = None
@@ -132,6 +137,7 @@ def get_prediction_by_id(prediction_id):
                 predicted_marks
             FROM predictions
             WHERE id = %s
+            AND is_deleted = 0
         """
 
         cursor.execute(query, (prediction_id,))
@@ -153,6 +159,8 @@ def get_prediction_by_id(prediction_id):
 
 # Search Predictions By Name---------------------------
 
+# Search Active Predictions By Name---------------------------
+
 def search_predictions_by_name(name):
     connection = None
     cursor = None
@@ -173,6 +181,7 @@ def search_predictions_by_name(name):
                 predicted_marks
             FROM predictions
             WHERE student_name LIKE %s
+            AND is_deleted = 0
             ORDER BY id DESC
         """
 
@@ -253,6 +262,8 @@ def update_prediction(
 
 # Delete Prediction--------------------------------
 
+# Soft Delete Prediction--------------------------------
+
 def delete_prediction(prediction_id):
     connection = None
     cursor = None
@@ -263,12 +274,117 @@ def delete_prediction(prediction_id):
         cursor = connection.cursor()
 
         query = """
-            DELETE FROM predictions
+            UPDATE predictions
+            SET is_deleted = 1
             WHERE id = %s
+            AND is_deleted = 0
         """
 
         cursor.execute(query, (prediction_id,))
 
+        connection.commit()
+
+        return cursor.rowcount
+
+    except Exception as e:
+        print("DATABASE ERROR:", e)
+        raise
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
+
+# Get Deleted Predictions---------------------------------
+
+def get_deleted_predictions():
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_connection()
+
+        cursor = connection.cursor(dictionary=True)
+
+        query = """
+            SELECT
+                id,
+                student_name,
+                study_hours,
+                attendance,
+                previous_marks,
+                assignment_score,
+                predicted_marks
+            FROM predictions
+            WHERE is_deleted = 1
+            ORDER BY id DESC
+        """
+
+        cursor.execute(query)
+
+        results = cursor.fetchall()
+
+        return results
+
+    except Exception as e:
+        print("DATABASE ERROR:", e)
+        raise
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
+
+def restore_prediction(prediction_id):
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+
+        query = """
+            UPDATE predictions
+            SET is_deleted = 0
+            WHERE id = %s
+            AND is_deleted = 1
+        """
+
+        cursor.execute(query, (prediction_id,))
+        connection.commit()
+
+        return cursor.rowcount
+
+    except Exception as e:
+        print("DATABASE ERROR:", e)
+        raise
+
+    finally:
+        if cursor:
+            cursor.close()
+
+        if connection:
+            connection.close()
+
+def permanent_delete_prediction(prediction_id):
+    connection = None
+    cursor = None
+
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+
+        query = """
+            DELETE FROM predictions
+            WHERE id = %s
+            AND is_deleted = 1
+        """
+
+        cursor.execute(query, (prediction_id,))
         connection.commit()
 
         return cursor.rowcount
